@@ -1,4 +1,4 @@
-package com.sourcesense.emanuele.newscombinatosoap;
+package com.sourcesense.emanuelepicariello.newscombinatosoap;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,36 +1,71 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://spring.io/guides/gs-producing-web-service"
-           targetNamespace="http://spring.io/guides/gs-producing-web-service" elementFormDefault="qualified">
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://www.newscombinator.com/sample"
+           targetNamespace="http://www.newscombinator.com/sample" elementFormDefault="qualified">
 
-    <xs:element name="getCountryRequest">
+    <xs:element name="getHackerNews">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="name" type="xs:string"/>
+                <xs:element name="source" type="tns:NewsType" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="getCountryResponse">
+    <xs:element name="getHackerNewsResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="country" type="tns:country"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="news" nillable="true" type="tns:news"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-
-    <xs:complexType name="country">
+    <!-- News abstract class -->
+    <xs:complexType abstract="true" name="news">
         <xs:sequence>
-            <xs:element name="name" type="xs:string"/>
-            <xs:element name="population" type="xs:int"/>
-            <xs:element name="capital" type="xs:string"/>
-            <xs:element name="currency" type="tns:currency"/>
+            <xs:element name="url" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:simpleType name="currency">
+
+    <!-- NyTimes class-->
+        <xs:complexType name="nyTimes">
+            <xs:complexContent>
+                <xs:extension base="tns:news">
+                    <xs:sequence>
+                        <xs:element name="title" type="xs:string"/>
+                        <xs:element name="created_Date" type="xs:date"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+
+
+    <!-- HackerNews class-->
+
+        <xs:complexType name="hackerNews">
+            <xs:complexContent>
+                <xs:extension base="tns:news">
+                    <xs:sequence>
+                        <xs:element name="time" type="xs:date"/>
+                        <xs:element name="title" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+
+    <xs:complexType name="NyTimesContainer">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="results" nillable="true" type="tns:nyTimes"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!--NewsType Enumeration Class -->
+    <xs:simpleType name="NewsType" final="restriction">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="GBP"/>
-            <xs:enumeration value="EUR"/>
-            <xs:enumeration value="PLN"/>
+            <xs:enumeration value="hackerNews"/>
+            <xs:enumeration value="nyTimesNews"/>
+            <xs:enumeration value="all" />
         </xs:restriction>
     </xs:simpleType>
+
+
 </xs:schema>
