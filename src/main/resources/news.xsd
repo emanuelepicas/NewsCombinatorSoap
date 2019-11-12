@@ -1,6 +1,10 @@
-<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+<xs:schema version="2.2" xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:tns="http://www.newscombinator.com/sample"
-           targetNamespace="http://www.newscombinator.com/sample" elementFormDefault="qualified">
+           targetNamespace="http://www.newscombinator.com/sample" elementFormDefault="qualified"
+           xmlns:jxb="http://java.sun.com/xml/ns/jaxb">
+
+
+
 
     <xs:element name="getHackerNews">
         <xs:complexType>
@@ -31,7 +35,7 @@
                 <xs:extension base="tns:news">
                     <xs:sequence>
                         <xs:element name="title" type="xs:string"/>
-                        <xs:element name="created_Date" type="xs:date"/>
+                        <xs:element name="created_date" type="xs:string"  />
                     </xs:sequence>
                 </xs:extension>
             </xs:complexContent>
@@ -44,18 +48,13 @@
             <xs:complexContent>
                 <xs:extension base="tns:news">
                     <xs:sequence>
-                        <xs:element name="time" type="xs:date"/>
+                        <xs:element name="time" type="xs:string"/>
                         <xs:element name="title" type="xs:string"/>
                     </xs:sequence>
                 </xs:extension>
             </xs:complexContent>
         </xs:complexType>
 
-    <xs:complexType name="NyTimesContainer">
-        <xs:sequence>
-            <xs:element maxOccurs="unbounded" minOccurs="0" name="results" nillable="true" type="tns:nyTimes"/>
-        </xs:sequence>
-    </xs:complexType>
 
 
     <!--NewsType Enumeration Class -->
