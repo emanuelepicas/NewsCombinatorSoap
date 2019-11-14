@@ -1,13 +1,11 @@
 package com.soursesense.emanuelepicariello.newscombinatorsoap.service;
 
-import com.soursesense.emanuelepicariello.newscombinatorsoap.mapper.HackerNewsMapper;
+import com.soursesense.emanuelepicariello.newscombinatorsoap.mapper.NewsMapper;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.model.HackerNewsEntity;
-import com.soursesense.emanuelepicariello.newscombinatorsoap.news.GetHackerNewsResponse;
-import com.soursesense.emanuelepicariello.newscombinatorsoap.news.HackerNews;
+import com.soursesense.emanuelepicariello.newscombinatorsoap.news.GetNewsResponse;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.news.News;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -62,10 +60,10 @@ public class HackerNewsService {
     }
 
     public List<News> mappingList() throws ExecutionException, InterruptedException {
-        List<HackerNews> hackerNewsList;
+        List<News> hackerNewsList;
         List<HackerNewsEntity> hackerNewsEntityList = allTheArticlesOfASource();
         hackerNewsList = hackerNewsEntityList.parallelStream().map(p ->
-                (HackerNewsMapper.INSTANCE.hackerNewsEntityToHackerNews(p))).collect(Collectors.toList());
+                (NewsMapper.INSTANCE.hackerNewsEntityToNews(p))).collect(Collectors.toList());
 
 
 
@@ -79,8 +77,8 @@ public class HackerNewsService {
             return mappingList;
         return new ArrayList<>();
     }
-    public GetHackerNewsResponse getHackerNewsResponse() throws ExecutionException, InterruptedException {
-        GetHackerNewsResponse response=new GetHackerNewsResponse();
+    public GetNewsResponse getHackerNewsResponse() throws ExecutionException, InterruptedException {
+        GetNewsResponse response=new GetNewsResponse();
         response.getNews().addAll(getHackerNews());
         return response;
 

@@ -6,7 +6,7 @@
 
 
 
-    <xs:element name="getHackerNews">
+    <xs:element name="getNews">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="source" type="tns:NewsType" />
@@ -14,7 +14,7 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="getHackerNewsResponse">
+    <xs:element name="getNewsResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element maxOccurs="unbounded" minOccurs="0" name="news" nillable="true" type="tns:news"/>
@@ -22,38 +22,14 @@
         </xs:complexType>
     </xs:element>
     <!-- News abstract class -->
-    <xs:complexType abstract="true" name="news">
+    <xs:complexType  name="news">
         <xs:sequence>
             <xs:element name="url" type="xs:string"/>
+            <xs:element name="time" type="xs:string"/>
+            <xs:element name="title" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 
-
-    <!-- NyTimes class-->
-        <xs:complexType name="nyTimes">
-            <xs:complexContent>
-                <xs:extension base="tns:news">
-                    <xs:sequence>
-                        <xs:element name="title" type="xs:string"/>
-                        <xs:element name="created_date" type="xs:string"  />
-                    </xs:sequence>
-                </xs:extension>
-            </xs:complexContent>
-        </xs:complexType>
-
-
-    <!-- HackerNews class-->
-
-        <xs:complexType name="hackerNews">
-            <xs:complexContent>
-                <xs:extension base="tns:news">
-                    <xs:sequence>
-                        <xs:element name="time" type="xs:string"/>
-                        <xs:element name="title" type="xs:string"/>
-                    </xs:sequence>
-                </xs:extension>
-            </xs:complexContent>
-        </xs:complexType>
 
 
 

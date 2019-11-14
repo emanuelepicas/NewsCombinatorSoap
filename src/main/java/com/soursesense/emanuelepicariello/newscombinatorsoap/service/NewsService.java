@@ -1,11 +1,10 @@
 package com.soursesense.emanuelepicariello.newscombinatorsoap.service;
 
-import com.soursesense.emanuelepicariello.newscombinatorsoap.mapper.HackerNewsMapper;
-import com.soursesense.emanuelepicariello.newscombinatorsoap.mapper.NyTimesMapper;
+import com.soursesense.emanuelepicariello.newscombinatorsoap.mapper.NewsMapper;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.model.HackerNewsEntity;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.model.NewsInterface;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.model.NyTimesArticleEntity;
-import com.soursesense.emanuelepicariello.newscombinatorsoap.news.GetHackerNewsResponse;
+import com.soursesense.emanuelepicariello.newscombinatorsoap.news.GetNewsResponse;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.news.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,10 +34,10 @@ public class NewsService {
         List<News> newsList=new ArrayList<>();
         for(NewsInterface s :getAllNews()){
             if(s instanceof HackerNewsEntity){
-                newsList.add(HackerNewsMapper.INSTANCE.hackerNewsEntityToHackerNews((HackerNewsEntity) s));
+                newsList.add(NewsMapper.INSTANCE.hackerNewsEntityToNews((HackerNewsEntity) s));
             }
             else if(s instanceof NyTimesArticleEntity){
-                newsList.add(NyTimesMapper.INSTANCE.nyTimesArticleEntityToNyTimes((NyTimesArticleEntity) s));
+                newsList.add(NewsMapper.INSTANCE.nyTimesArticleEntityToNews((NyTimesArticleEntity) s));
             }
         }
 
@@ -46,8 +45,8 @@ public class NewsService {
         return newsList;
     }
 
-    public GetHackerNewsResponse getAllNewsResponse() throws ExecutionException, InterruptedException, IOException {
-        GetHackerNewsResponse response=new GetHackerNewsResponse();
+    public GetNewsResponse getAllNewsResponse() throws ExecutionException, InterruptedException, IOException {
+        GetNewsResponse response=new GetNewsResponse();
         response.getNews().addAll(mapAllTheArticle());
         return response;
 

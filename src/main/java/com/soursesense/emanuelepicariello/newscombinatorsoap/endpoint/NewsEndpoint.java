@@ -1,7 +1,8 @@
 package com.soursesense.emanuelepicariello.newscombinatorsoap.endpoint;
 
-import com.soursesense.emanuelepicariello.newscombinatorsoap.news.GetHackerNews;
-import com.soursesense.emanuelepicariello.newscombinatorsoap.news.GetHackerNewsResponse;
+
+import com.soursesense.emanuelepicariello.newscombinatorsoap.news.GetNews;
+import com.soursesense.emanuelepicariello.newscombinatorsoap.news.GetNewsResponse;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.news.NewsType;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.service.HackerNewsService;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.service.NewsService;
@@ -13,10 +14,7 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-
-import static jdk.nashorn.internal.objects.Global.print;
 
 @Endpoint
 public class NewsEndpoint {
@@ -29,12 +27,12 @@ public class NewsEndpoint {
     NewsService newsService;
 
     @PayloadRoot(namespace = "http://www.newscombinator.com/sample",
-            localPart = "getHackerNews")
+            localPart = "getNews")
     @ResponsePayload
-    public GetHackerNewsResponse getHackerNewsRequest(@RequestPayload GetHackerNews request) throws ExecutionException, InterruptedException, IOException {
+    public GetNewsResponse getHackerNewsRequest(@RequestPayload GetNews request) throws ExecutionException, InterruptedException, IOException {
         NewsType newsType = request.getSource();
 
-        GetHackerNewsResponse response = new GetHackerNewsResponse();
+        GetNewsResponse response = new GetNewsResponse();
 
         switch (newsType) {
             case HACKER_NEWS:

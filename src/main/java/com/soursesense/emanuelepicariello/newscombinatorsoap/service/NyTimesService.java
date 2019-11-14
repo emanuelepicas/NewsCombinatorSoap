@@ -1,6 +1,6 @@
 package com.soursesense.emanuelepicariello.newscombinatorsoap.service;
 
-import com.soursesense.emanuelepicariello.newscombinatorsoap.mapper.NyTimesMapper;
+import com.soursesense.emanuelepicariello.newscombinatorsoap.mapper.NewsMapper;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.model.NyTimesArticleContainer;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.model.NyTimesArticleEntity;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.news.*;
@@ -25,7 +25,7 @@ public class NyTimesService {
     private String nyTimesNews;
 
 
-    public List<NyTimes> getAllArticleOfNyTimes() throws IOException, ExecutionException, InterruptedException {
+    public List<News> getAllArticleOfNyTimes() throws IOException, ExecutionException, InterruptedException {
         logger.info("creation of NyTimes list");
 
 
@@ -40,11 +40,11 @@ Collections.addAll(allNyTimesArticles,allArticles);
         return allNyTimesArticles;
     }
 
-    public List<NyTimes> mapping() throws ExecutionException, InterruptedException {
-        List<NyTimes> news;
+    public List<News> mapping() throws ExecutionException, InterruptedException {
+        List<News> news;
         List<NyTimesArticleEntity> newsEntities=printNews();
         news=newsEntities.parallelStream().map(p->
-                ( NyTimesMapper.INSTANCE.nyTimesArticleEntityToNyTimes(p)))
+                ( NewsMapper.INSTANCE.nyTimesArticleEntityToNews(p)))
                         .collect(Collectors.toList());
         return news;
     }
@@ -57,8 +57,8 @@ Collections.addAll(allNyTimesArticles,allArticles);
 
     }
 
-    public GetHackerNewsResponse getNyTimesResponse() throws ExecutionException, InterruptedException, IOException {
-        GetHackerNewsResponse response=new GetHackerNewsResponse();
+    public GetNewsResponse getNyTimesResponse() throws ExecutionException, InterruptedException, IOException {
+        GetNewsResponse response=new GetNewsResponse();
         response.getNews().addAll(getAllArticleOfNyTimes());
         return response;
 
