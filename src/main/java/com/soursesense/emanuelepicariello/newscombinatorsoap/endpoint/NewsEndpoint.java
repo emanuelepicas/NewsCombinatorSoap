@@ -2,7 +2,9 @@ package com.soursesense.emanuelepicariello.newscombinatorsoap.endpoint;
 
 import com.soursesense.emanuelepicariello.newscombinatorsoap.news.GetHackerNews;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.news.GetHackerNewsResponse;
+import com.soursesense.emanuelepicariello.newscombinatorsoap.news.NewsType;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.service.HackerNewsService;
+import com.soursesense.emanuelepicariello.newscombinatorsoap.service.NewsService;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.service.NyTimesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -23,25 +25,30 @@ public class NewsEndpoint {
     HackerNewsService hackerNewsService;
     @Autowired
     NyTimesService nytimesService;
-@PayloadRoot(namespace = "http://www.newscombinator.com/sample" ,
-        localPart = "getHackerNews")
-@ResponsePayload
-public GetHackerNewsResponse getHackerNewsRequest(@RequestPayload GetHackerNews getHackerNews) throws ExecutionException, InterruptedException, IOException {
-    try {
+    @Autowired
+    NewsService newsService;
+
+    @PayloadRoot(namespace = "http://www.newscombinator.com/sample",
+            localPart = "getHackerNews")
+    @ResponsePayload
+    public GetHackerNewsResponse getHackerNewsRequest(@RequestPayload GetHackerNews request) throws ExecutionException, InterruptedException, IOException {
+        NewsType newsType = request.getSource();
+
         GetHackerNewsResponse response = new GetHackerNewsResponse();
-        if (getHackerNews.getSource().value().equals("hackerNews"))
-            response.getNews().addAll(hackerNewsService.getHackerNews());
-        else if (getHackerNews.getSource().value().equals("nyTimesNews"))
-            response.getNews().addAll(nytimesService.getAllArticleOfNyTimes());
-        else if (getHackerNews.getSource().value().equals("all")) {
-            response.getNews().addAll(hackerNewsService.getHackerNews());
-            response.getNews().addAll(nytimesService.getAllArticleOfNyTimes());
+
+        switch (newsType) {
+            case HACKER_NEWS:
+                 return this.hackerNewsService.getHackerNewsResponse();
+            case NY_TIMES_NEWS:
+                return this.nytimesService.getNyTimesResponse();
+            case ALL: {
+                return this.newsService.getAllNewsResponse();
+            }
+            default:
+                return null;
         }
-        return response;
-    } catch (Exception e) {
-        print(e.getCause());
-        return new GetHackerNewsResponse();
+
     }
 }
 
-}
+

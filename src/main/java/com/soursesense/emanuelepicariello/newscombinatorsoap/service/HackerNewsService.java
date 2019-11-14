@@ -2,9 +2,12 @@ package com.soursesense.emanuelepicariello.newscombinatorsoap.service;
 
 import com.soursesense.emanuelepicariello.newscombinatorsoap.mapper.HackerNewsMapper;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.model.HackerNewsEntity;
+import com.soursesense.emanuelepicariello.newscombinatorsoap.news.GetHackerNewsResponse;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.news.HackerNews;
+import com.soursesense.emanuelepicariello.newscombinatorsoap.news.News;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -59,7 +62,7 @@ public class HackerNewsService {
         return allHackerNewsList;
     }
 
-    public List<HackerNews> mappingList() throws ExecutionException, InterruptedException {
+    public List<News> mappingList() throws ExecutionException, InterruptedException {
         List<HackerNews> hackerNewsList;
         List<HackerNewsEntity> hackerNewsEntityList = allTheArticlesOfASource();
         hackerNewsList = hackerNewsEntityList.parallelStream().map(p ->
@@ -67,15 +70,21 @@ public class HackerNewsService {
 
 
 
-        return hackerNewsList;
+        return new ArrayList<>(hackerNewsList);
 }
 
 
-    public List<HackerNews> getHackerNews() throws ExecutionException, InterruptedException {
-        List<HackerNews> mappingList = mappingList();
+    public List<News> getHackerNews() throws ExecutionException, InterruptedException {
+        List<News> mappingList = mappingList();
         if (mappingList != null)
             return mappingList;
-        return new ArrayList<HackerNews>();
+        return new ArrayList<>();
+    }
+    public GetHackerNewsResponse getHackerNewsResponse() throws ExecutionException, InterruptedException {
+        GetHackerNewsResponse response=new GetHackerNewsResponse();
+        response.getNews().addAll(getHackerNews());
+        return response;
+
     }
 
 }

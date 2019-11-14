@@ -4,10 +4,7 @@ import com.soursesense.emanuelepicariello.newscombinatorsoap.mapper.NyTimesMappe
 import com.soursesense.emanuelepicariello.newscombinatorsoap.model.NewsEntity;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.model.NyTimesArticleContainer;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.model.NyTimesArticleEntity;
-import com.soursesense.emanuelepicariello.newscombinatorsoap.news.HackerNews;
-import com.soursesense.emanuelepicariello.newscombinatorsoap.news.News;
-import com.soursesense.emanuelepicariello.newscombinatorsoap.news.NyTimes;
-import com.soursesense.emanuelepicariello.newscombinatorsoap.news.NyTimesContainer;
+import com.soursesense.emanuelepicariello.newscombinatorsoap.news.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -59,6 +56,13 @@ Collections.addAll(allNyTimesArticles,allArticles);
         NyTimesArticleContainer allNyTimesArticlesContainers = restTemplate.getForObject(nyTimesNews, NyTimesArticleContainer.class);
 
         return allNyTimesArticlesContainers;
+
+    }
+
+    public GetHackerNewsResponse getNyTimesResponse() throws ExecutionException, InterruptedException, IOException {
+        GetHackerNewsResponse response=new GetHackerNewsResponse();
+        response.getNews().addAll(getAllArticleOfNyTimes());
+        return response;
 
     }
 
