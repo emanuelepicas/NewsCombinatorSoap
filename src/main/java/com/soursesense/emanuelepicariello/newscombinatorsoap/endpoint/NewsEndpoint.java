@@ -3,6 +3,7 @@ package com.soursesense.emanuelepicariello.newscombinatorsoap.endpoint;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.news.GetHackerNews;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.news.GetHackerNewsResponse;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.service.HackerNewsService;
+import com.soursesense.emanuelepicariello.newscombinatorsoap.service.NewsService;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.service.NyTimesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -23,6 +24,8 @@ public class NewsEndpoint {
     HackerNewsService hackerNewsService;
     @Autowired
     NyTimesService nytimesService;
+    @Autowired
+    NewsService newsService;
 @PayloadRoot(namespace = "http://www.newscombinator.com/sample" ,
         localPart = "getHackerNews")
 @ResponsePayload
@@ -34,8 +37,7 @@ public GetHackerNewsResponse getHackerNewsRequest(@RequestPayload GetHackerNews 
         else if (getHackerNews.getSource().value().equals("nyTimesNews"))
             response.getNews().addAll(nytimesService.getAllArticleOfNyTimes());
         else if (getHackerNews.getSource().value().equals("all")) {
-            response.getNews().addAll(hackerNewsService.getHackerNews());
-            response.getNews().addAll(nytimesService.getAllArticleOfNyTimes());
+            response.getNews().addAll(newsService.mapAllTheArticle());
         }
         return response;
     } catch (Exception e) {
