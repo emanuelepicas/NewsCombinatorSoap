@@ -2,7 +2,9 @@ package com.soursesense.emanuelepicariello.newscombinatorsoap.model;
 
 import java.util.Date;
 
-public class NyTimesArticleEntity extends NewsEntity {
+public class NyTimesArticleEntity implements NewsInterface {
+
+	private String url;
 
 	private String title;
 
@@ -26,4 +28,16 @@ public class NyTimesArticleEntity extends NewsEntity {
 		return created_date;
 	}
 
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	@Override
+	public int compareTo(NewsInterface o) {
+		return this.getData().compareTo(o.getData());
+	}
 }

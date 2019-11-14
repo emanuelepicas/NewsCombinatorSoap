@@ -6,11 +6,11 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class HackerNewsEntity extends NewsEntity {
+public class HackerNewsEntity implements NewsInterface  {
 
+	private String url;
 
 	private Date time;
-	
 
 	private String title;
 
@@ -33,6 +33,17 @@ public class HackerNewsEntity extends NewsEntity {
 		return time;
 	}
 
+	public String getUrl() {
+		return url;
+	}
 
 
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	@Override
+	public int compareTo(NewsInterface o) {
+		return this.getData().compareTo(o.getData());
+	}
 }

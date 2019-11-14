@@ -1,7 +1,6 @@
 package com.soursesense.emanuelepicariello.newscombinatorsoap.service;
 
 import com.soursesense.emanuelepicariello.newscombinatorsoap.mapper.NyTimesMapper;
-import com.soursesense.emanuelepicariello.newscombinatorsoap.model.NewsEntity;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.model.NyTimesArticleContainer;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.model.NyTimesArticleEntity;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.news.*;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Collectors;
 
 @Service

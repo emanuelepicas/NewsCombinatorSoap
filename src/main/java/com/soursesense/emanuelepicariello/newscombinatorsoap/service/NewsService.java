@@ -3,7 +3,7 @@ package com.soursesense.emanuelepicariello.newscombinatorsoap.service;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.mapper.HackerNewsMapper;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.mapper.NyTimesMapper;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.model.HackerNewsEntity;
-import com.soursesense.emanuelepicariello.newscombinatorsoap.model.NewsEntity;
+import com.soursesense.emanuelepicariello.newscombinatorsoap.model.NewsInterface;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.model.NyTimesArticleEntity;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.news.GetHackerNewsResponse;
 import com.soursesense.emanuelepicariello.newscombinatorsoap.news.News;
@@ -22,19 +22,18 @@ public class NewsService {
     HackerNewsService hackerNewsService;
 
 
-    public List<NewsEntity> getAllNews() throws ExecutionException, InterruptedException {
-        List<NewsEntity> newsList = new ArrayList<>();
+    public List<NewsInterface> getAllNews() throws ExecutionException, InterruptedException {
+        List<NewsInterface> newsList = new ArrayList<>();
         newsList.addAll(nyTimesService.printNews());
         newsList.addAll(hackerNewsService.allTheArticlesOfASource());
-        CompareDateNews cmp = new CompareDateNews();
-        Collections.sort(newsList, cmp);
+        Collections.sort(newsList);
 
         return newsList;
     }
 
     public List<News> mapAllTheArticle() throws ExecutionException, InterruptedException {
         List<News> newsList=new ArrayList<>();
-        for(NewsEntity s :getAllNews()){
+        for(NewsInterface s :getAllNews()){
             if(s instanceof HackerNewsEntity){
                 newsList.add(HackerNewsMapper.INSTANCE.hackerNewsEntityToHackerNews((HackerNewsEntity) s));
             }

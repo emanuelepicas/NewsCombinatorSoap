@@ -55,8 +55,7 @@ public class HackerNewsService {
                 .collect(Collectors.toList())).get();
         logger.info("creation of HackerNewsList");
 
-        CompareDateNews cmp = new CompareDateNews();
-        Collections.sort(allHackerNewsList, cmp);
+        Collections.sort(allHackerNewsList);
 
 
         return allHackerNewsList;
