@@ -37,6 +37,7 @@ public class NyTimesService {
         List<NyTimesArticleEntity> allNyTimesArticles = new ArrayList<>();
         NyTimesArticleEntity[] allArticles = allTheArticlesOFNyTimes().getResults();
 Collections.addAll(allNyTimesArticles,allArticles);
+Collections.sort(allNyTimesArticles);
         return allNyTimesArticles;
     }
 
